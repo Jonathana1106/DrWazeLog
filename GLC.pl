@@ -2,14 +2,14 @@
 :-include('Arcos.pl').
 :-style_check(-singleton). /*Establece que solo se inicie una vez el programa y no varias veces al mismo tiempo*/
 
-init():-sendRead(). /*Inicia el programa*/
+init(A):-sendRead(A). /*Inicia el programa*/
 
 % Envia un mensaje de bienvenida, lee lo ingresado por el usuario y lo
 % convierte a string (read_line_to_string), ademas le aplica un lower
 % case (string_lower) y lo almacena en una lista (atomic_list_concat),
 % luego llama a interpreter pasandole L1 que es la lista que contiene la
 % oracion que ingreso el usuario.
-sendRead():-write('DrWazeLog: Bienvenido a WazeLog la mejor lógica de llegar a su destino. Por Favor indíqueme donde se encuentra.')
+sendRead(A):-write('DrWazeLog: Bienvenido a WazeLog la mejor lï¿½gica de llegar a su destino. Por Favor indï¿½queme donde se encuentra.')
 ,nl
 ,write('Usuario: ')
 ,read_line_to_string(user_input, Cs)
@@ -44,7 +44,7 @@ interpreter(Oracion):-nl,
 % no seguir acarreandolo como lista y llama a interpreter2 pasandole
 % como parametros el origen y la lista que contiene la oracion ingresada
 % por el usuario.
-sendRead2(OrigenL):-write('DrWazeLog: Muy bien, ¿Cuál es su destino?')
+sendRead2(OrigenL):-write('DrWazeLog: Muy bien, ï¿½Cuï¿½l es su destino?')
 ,nl
 ,write('Usuario: ')
 ,read_line_to_string(user_input, Cs)
@@ -84,7 +84,7 @@ interpreter2(Origen,Oracion):-nl,
 % le pasa como parametros el origen del usuario, la lista de los
 % destinos que quiere visitar y la respuesta del usuario a la pregunta
 % realizada.
-sendRead3(Origen,LugaresDestino):-nl,write('DrWazeLog: '),write('Excelente, ¿Tiene algún destino intermedio?')
+sendRead3(Origen,LugaresDestino):-nl,write('DrWazeLog: '),write('Excelente, ï¿½Tiene algï¿½n destino intermedio?')
 ,nl
 ,write('Usuario: ')
 ,read_line_to_string(user_input, Cs)
@@ -124,7 +124,7 @@ interpreter3(Origen,LugaresDestino,Oracion):-nl,
 % Llama a interpreter3 y le pasa como parametros el origen del usuario,
 % la lista de los destinos que quiere visitar y la respuesta del usuario
 % a la pregunta realizada.
-sendRead4(Origen,LugaresDestino,LugarPasar):-nl,write('DrWazeLog: ¿Cuál '),write(LugarPasar),write('?')
+sendRead4(Origen,LugaresDestino,LugarPasar):-nl,write('DrWazeLog: ï¿½Cuï¿½l '),write(LugarPasar),write('?')
 ,nl
 ,write('Usuario: ')
 ,read_line_to_string(user_input, Cs)
@@ -156,11 +156,8 @@ interpreter4(Origen,LugaresDestino,Oracion):-nl,
 % retorna la ruta que este debe seguir, al realizar las paradas inicia
 % de nuevo en ese destino y busca el siguiente hasta llegar al final,
 % finalmente le indica la distancia que hay al tomar esa ruta.
-validaRuta(Origen,Lugares):-get_whole_path(Lugares,Origen,X,Y),!,write('DrWazeLog: Su ruta es: '),printPath(X),write(' con una
-distancia de: '),write(Y),write(' km.'),nl,write('Muchas gracias por su preferencia. ¡Hasta la próxima!').
-% Si no encuentra una ruta a los destinos deseados, envia un mensaje de
-% error y vuelve el inicio del programa para que intente de nuevo.
-validaRuta(Origen,Lugares):-(not(get_whole_path(Lugares,Origen,X,Y))),write('DrWazeLog: No se encuentra ruta alguna para visitar todos los destinos deseados, por favor intente de nuevo.'),nl,sendRead(),nl.
+validaRuta(Origen,Lugares):-get_whole_path(Lugares,Origen,X,Y)->write('DrWazeLog: Su ruta es: '),printPath(X),write('con una distancia de: '),write(Y),write(' km.'),nl,write('Muchas gracias por su preferencia. Hasta la proxima!');
+(not(get_whole_path(Lugares,Origen,X,Y)))->write('DrWazeLog: No se encuentra ruta alguna para visitar todos los destinos deseados, por favor intente de nuevo.'),nl,sendRead(A),nl.
 
 % Recibe una lista con los destinos a visitar y los va imprimiendo
 % (mostrando) hasta que la lista sea vacia lo que indica que ya no hay
@@ -177,7 +174,7 @@ printPath([X|Resto]):-write(X),write(', '),printPath(Resto).
 % lo almacena en una lista (atomic_list_concat),Llama a interpreter4 y
 % le pasa como parametros el origen del usuario, la lista de los
 % destinos a visitar y la lista que contiene la respuesta del usuario.
-sendRead5(Origen,LugaresDestino,LugarPasar):-nl,write('DrWazeLog: ¿Dónde se encuentra '),write(LugarPasar),write('?')
+sendRead5(Origen,LugaresDestino,LugarPasar):-nl,write('DrWazeLog: ï¿½Dï¿½nde se encuentra '),write(LugarPasar),write('?')
 ,nl
 ,write('Usuario: ')
 ,read_line_to_string(user_input, Cs)
